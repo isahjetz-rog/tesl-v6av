@@ -1,0 +1,117 @@
+-- -------------------------------------------------------------
+-- Tesla Giveaway & Inventory CMS Database Schema
+-- Compatible with MySQL / MariaDB (e.g. phpMyAdmin, RDS, etc.)
+-- Suitable for importing directly into your MySQL Database in Hosting Controls
+-- -------------------------------------------------------------
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `car_images`;
+DROP TABLE IF EXISTS `inquiries`;
+DROP TABLE IF EXISTS `settings`;
+DROP TABLE IF EXISTS `cars`;
+DROP TABLE IF EXISTS `users`;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- 1. Create Users Table (Laravel default Auth)
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed default Admin User (Email: admin@tesla.com, Password: admin123)
+-- Hash generated using standard bcrypt matching Laravel rules
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) 
+VALUES (1, 'Admin Administrator', 'admin@tesla.com', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', NOW(), NOW());
+
+
+-- 2. Create Cars Table
+CREATE TABLE `cars` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Tesla',
+  `model` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year` int(11) NOT NULL,
+  `price` decimal(12,2) NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `specifications` json DEFAULT NULL,
+  `featured` tinyint(1) NOT NULL DEFAULT 0,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed default Tesla Cars Inventory
+INSERT INTO `cars` (`id`, `name`, `brand`, `model`, `year`, `price`, `description`, `specifications`, `featured`, `active`, `created_at`, `updated_at`) VALUES
+('model-3-2025', 'Tesla Model 3 2025', 'Tesla', 'Model 3', 2025, 38990.00, 'The future of driving is here. Refined styling, longer range, and a completely redesigned premium status interior. Active safety systems included.', '{"range": "272 - 341 mi", "power": "283 - 496 hp", "battery": "57.5 - 75 kWh", "topSpeed": "125 - 162 mph", "drivetrain": "RWD / AWD Dual Motor", "zeroToSixty": "2.9 - 5.8 s"}', 1, 1, NOW(), NOW()),
+('model-y-2025', 'Tesla Model Y 2025', 'Tesla', 'Model Y', 2025, 44990.00, 'Versatile and roomy SUV layout. Perfect layout configuration, elevated seat design, premium panoramic glass roof, and vast storage capacity.', '{"range": "260 - 320 mi", "power": "295 - 455 hp", "battery": "60 - 81 kWh", "topSpeed": "135 - 150 mph", "drivetrain": "RWD / AWD Long Range", "zeroToSixty": "3.5 - 5.0 s"}', 1, 1, NOW(), NOW()),
+('model-s-2025', 'Tesla Model S Plaid 2025', 'Tesla', 'Model S Plaid', 2025, 89990.00, 'Beyond ludicrous performance. 1,020 horsepower peak output driven by a tri-motor system. Refined dual-pane windows, yoke steering available.', '{"range": "359 - 402 mi", "power": "1,020 hp", "battery": "100 kWh", "topSpeed": "200 mph", "drivetrain": "Tri-Motor AWD Plaid", "zeroToSixty": "1.99 s"}', 1, 1, NOW(), NOW()),
+('model-x-2025', 'Tesla Model X 2025', 'Tesla', 'Model X', 2025, 79990.00, 'Utility meets style with signature Falcon Wing passenger doors and massive panoramic windshield. Perfect balance of cargo and seating.', '{"range": "326 - 335 mi", "power": "670 - 1,020 hp", "battery": "100 kWh", "topSpeed": "149 - 163 mph", "drivetrain": "Dual Motor / Plaid Tri-Motor", "zeroToSixty": "2.5 - 3.8 s"}', 0, 1, NOW(), NOW());
+
+
+-- 3. Create Car Images Table
+CREATE TABLE `car_images` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `car_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `car_images_car_id_foreign` (`car_id`),
+  CONSTRAINT `car_images_car_id_foreign` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed default Car Images linked to specific models
+INSERT INTO `car_images` (`id`, `car_id`, `path`, `sort_order`, `created_at`, `updated_at`) VALUES
+(1, 'model-3-2025', 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80', 0, NOW(), NOW()),
+(2, 'model-y-2025', 'https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=800&q=80', 0, NOW(), NOW()),
+(3, 'model-s-2025', 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80', 0, NOW(), NOW()),
+(4, 'model-x-2025', 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80', 0, NOW(), NOW());
+
+
+-- 4. Create Inquiries Table (Customer Claims)
+CREATE TABLE `inquiries` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `car_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `car_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `inquiries_car_id_foreign` (`car_id`),
+  CONSTRAINT `inquiries_car_id_foreign` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed an initial sample inquiry/claim
+INSERT INTO `inquiries` (`id`, `car_id`, `car_name`, `name`, `email`, `phone`, `message`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'model-3-2025', 'Tesla Model 3 2025', 'Sarah Jenkins', 'sarah.j@example.com', '+1 (415) 882-9901', 'Delivery Address Details:\n- Street Address: 450 Fremont St\n- City: San Francisco\n- ZIP/Postal: 94105\n- Country: USA\n\nSpecifications Choice: Standard Air Delivery\nOne-Time Delivery Fee Required: $199', 'pending', NOW(), NOW());
+
+
+-- 5. Create Settings Table
+CREATE TABLE `settings` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed Configuration Settings
+INSERT INTO `settings` (`key`, `value`, `created_at`, `updated_at`) VALUES
+('title', 'Tesla Car Giveaway', NOW(), NOW()),
+('logo', 'Tesla Giveaway', NOW(), NOW()),
+('supportEmail', 'claims@teslagiveaway.com', NOW(), NOW()),
+('socialLinks', '{"twitter": "https://twitter.com/tesla", "facebook": "https://facebook.com/tesla", "instagram": "https://instagram.com/tesla"}', NOW(), NOW());

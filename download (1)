@@ -1,0 +1,148 @@
+# Tesla Giveaway & Inventory CMS
+
+Welcome to the **Tesla Giveaway & Inventory CMS**! This repository features a fully integrated, high-performance web application constructed with **React 19 (Vite)** on the frontend and a **Node.js (Express)** backend. 
+
+It is styled using **Tailwind CSS v4** and includes dynamic motion layouts powered by `motion/react` with high-contrast, eye-safe midnight themes.
+
+---
+
+## 🛠️ Installation & Local Setup
+
+Deploy and run the entire application locally on your machine in just three simple steps.
+
+### 1. Prerequisites
+Ensure you have the following installed:
+* **Node.js**: Version 18.0.0 or higher
+* **NPM**: Package manager (comes preinstalled with Node.js)
+
+### 2. Install Project Dependencies
+In the root directory of your project folder, open your terminal and install all required frontend and backend packages:
+```bash
+npm install
+```
+
+### 3. Run the Development Server
+Execute the custom combined dev command using `tsx` to boot up the Express server and Vite asset bundler:
+```bash
+npm run dev
+```
+Once started, the application will boot locally. Open your browser and navigate to:
+👉 **`http://localhost:3000`**
+
+### 4. Compiling & Production Release
+To compile the absolute production-grade bundle (front-end assets built inside `dist/` and backend server compiled to safe `.cjs` with `esbuild`), run:
+```bash
+# Build production bundle
+npm run build
+
+# Start the optimized production server
+npm run start
+```
+
+---
+
+## 🗄️ Database Import & Reset Guide
+
+This application utilizes a powerful, high-performance, and lightweight **JSON flat-file database** located at:
+📁 **`/src/db.json`**
+
+### How the Database Works
+1. When you run the server for the first time, it automatically reads `/src/db.json` as the system state.
+2. All **Customer Claims**, **Vehicle Specifications Inquiries**, **Cars Inventory**, and **Custom branding site configurations** are written immediately and persistently to `/src/db.json`.
+3. **No separate SQL installation is needed** to run this app—the database is prefilled, preloaded, and **auto-imports live at startup**.
+
+### How to Back Up the Database
+Simply make a copy of the database file:
+```bash
+cp src/db.json src/db_backup.json
+```
+
+### How to Import custom Data / Restores
+If you want to import dynamic inventory or replace the current database with another, simply copy your JSON state into **`src/db.json`**. The database schema is fully documented below.
+
+#### Complete `src/db.json` Schema Structure:
+```json
+{
+  "cars": [
+    {
+      "id": "model-s-plaid",
+      "name": "Model S Plaid",
+      "brand": "Tesla",
+      "model": "Plaid S",
+      "year": 2024,
+      "price": 89990,
+      "description": "Experience unbeatable acceleration and a futuristic cabin. Tri-motor electric drive system with 1,020 hp.",
+      "specifications": {
+        "range": "359 mi",
+        "topSpeed": "200 mph",
+        "zeroToSixty": "1.99 s",
+        "drivetrain": "Tri-Motor AWD",
+        "power": "1,020 hp",
+        "battery": "100 kWh"
+      },
+      "images": [
+        "/assets/images/tesla_model_s_1782126952125.jpg"
+      ],
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-06-21T10:00:00.000Z"
+    }
+  ],
+  "inquiries": [
+    {
+      "id": "inq-1",
+      "carId": "model-s-plaid",
+      "carName": "Model S Plaid",
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "+1 (555) 019-2834",
+      "message": "Delivery Address Details:\n- Street Address: 123 Tesla Way\n- City: Austin\n- ZIP/Postal: 73301\n- Country: United States...",
+      "status": "pending",
+      "createdAt": "2024-06-21T21:40:00.000Z"
+    }
+  ],
+  "settings": {
+    "title": "Tesla Car Giveaway",
+    "logo": "Tesla Motors",
+    "supportEmail": "claims@teslagiveaway.com",
+    "socialLinks": {
+      "twitter": "https://twitter.com/tesla",
+      "facebook": "https://facebook.com/tesla",
+      "instagram": "https://instagram.com/tesla"
+    }
+  }
+}
+```
+
+---
+
+## 🔑 Administrative Access
+
+To monitor, view, and follow-up on claims submitted by users who clicked **"Claim Now"** and filled out the vehicle delivery coordinates, access the secure CRM suite:
+
+1. Click the **Admin Control** toggle or button visible in the bottom-left corner anchor of the landing page.
+2. Log in with the pre-seeded admin master credentials:
+   * **Admin Email**: `admin@tesla.com`
+   * **Admin Password**: `admin123`
+
+Inside the Admin Dashboard:
+* View all **Claim Submissions & Inquiries** in real-time.
+* Follow up, edit delivery info, or update progress status (e.g., mark as `CONTACTED` or `SHIPPED` / `COMPLETED`).
+* Customize the active Car Inventory (upload photos, modify prices, publish or unpublish specific models).
+* Edit branding settings instantly.
+
+---
+
+## Laravel Standalone Project (Alternative Backend)
+If you decide to migrate or run this application using the **Laravel PHP Framework** located in the `/laravel` directory:
+1. Copy your `.env` settings.
+2. Open terminal inside the `/laravel` folder.
+3. Establish your DB using:
+   ```bash
+   composer install
+   php artisan migrate
+   php artisan db:seed
+   ```
+4. Link up uploads using `php artisan storage:link`.
+5. Run the server using `php artisan serve` (Defaults to port `8000`).
+   *(Refer to `/laravel/README.md` for full detailed directions on PHP installation).*
