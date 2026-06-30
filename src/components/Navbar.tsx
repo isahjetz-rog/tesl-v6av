@@ -66,7 +66,7 @@ export default function Navbar({ settings, onScrollToSection, onClaimClick, them
     // Fallback default
     return (
       <img
-        src="/assets/images/tesla_logo_1782579134236.jpg"
+        src="/images/tesla_logo_1782579134236.jpg"
         alt="Tesla Motors"
         className={imgClassName}
         referrerPolicy="no-referrer"
