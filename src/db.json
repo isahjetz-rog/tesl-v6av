@@ -1,0 +1,135 @@
+import {tesla1} from "tesla_model_s.jpg"
+
+{
+  "cars": [
+    {
+      "id": "model-s-plaid",
+      "name": "Model S Plaid",
+      "brand": "Tesla",
+      "model": "Plaid S",
+      "year": 2024,
+      "price": 89990,
+      "description": "Experience unbeatable acceleration and a futuristic cabin. The Tesla Model S Plaid is powered by a high-performance tri-motor electric drive system producing 1,020 peak horsepower.",
+      "specifications": {
+        "range": "359 mi",
+        "topSpeed": "200 mph",
+        "zeroToSixty": "1.99 s",
+        "drivetrain": "Tri-Motor AWD",
+        "power": "1,020 hp",
+        "battery": "100 kWh"
+      },
+      "images": [
+        "/images/tesla_model_s.jpg"
+      ],
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-06-21T10:00:00.000Z"
+    },
+    {
+      "id": "model-3-performance",
+      "name": "Model 3 Performance",
+      "brand": "Tesla",
+      "model": "Performance 3",
+      "year": 2024,
+      "price": 54990,
+      "description": "A high-performance luxury compact sedan featuring track mode, standard bucket seat upgrades, lowered suspension, and custom grey sports performance wheels.",
+      "specifications": {
+        "range": "303 mi",
+        "topSpeed": "163 mph",
+        "zeroToSixty": "2.9 s",
+        "drivetrain": "Dual Motor AWD",
+        "power": "510 hp",
+        "battery": "75 kWh"
+      },
+      "images": [
+        "/images/tesla_model_3.jpg"
+      ],
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-06-21T10:30:00.000Z"
+    },
+    {
+      "id": "model-y-longrange",
+      "name": "Model Y Long Range",
+      "brand": "Tesla",
+      "model": "Long Range Y",
+      "year": 2024,
+      "price": 47990,
+      "description": "The perfect balance between athletic utility and ultimate efficiency. With generous trunk cargo room and an optional 7-row configuration, travel anywhere together.",
+      "specifications": {
+        "range": "320 mi",
+        "topSpeed": "135 mph",
+        "zeroToSixty": "4.8 s",
+        "drivetrain": "Dual Motor AWD",
+        "power": "384 hp",
+        "battery": "81 kWh"
+      },
+      "images": [
+        "/images/tesla_model_y.jpg"
+      ],
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-06-21T11:00:00.000Z"
+    },
+    {
+      "id": "cyberbeast-tri-motor",
+      "name": "Cyberbeast Tri-Motor",
+      "brand": "Tesla",
+      "model": "Cyberbeast",
+      "year": 2025,
+      "price": 99990,
+      "description": "Built for any planet. Cybertruck is durable and rugged enough to go anywhere, with shatter-resistant armor glass, bulletproof stainless steel, and steer-by-wire capability.",
+      "specifications": {
+        "range": "320 mi",
+        "topSpeed": "130 mph",
+        "zeroToSixty": "2.6 s",
+        "drivetrain": "Tri-Motor AWD",
+        "power": "845 hp",
+        "battery": "123 kWh"
+      },
+      "images": [
+        "/images/tesla_cybertruck.jpg"
+      ],
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-06-21T12:00:00.000Z"
+    }
+  ],
+  "inquiries": [
+    {
+      "id": "inq-1",
+      "carId": "model-s-plaid",
+      "carName": "Model S Plaid",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1 (555) 123-4567",
+      "message": "Hello! I am very interested in scheduling a digital preview or a demo drive for the Model S Plaid. Let me know what dates are available next week.",
+      "status": "pending",
+      "createdAt": "2026-06-22T02:15:00.000Z"
+    },
+    {
+      "id": "inq-2",
+      "carId": "cyberbeast-tri-motor",
+      "carName": "Cyberbeast Tri-Motor",
+      "name": "Sarah Miller",
+      "email": "sarah.m@example.com",
+      "phone": "+1 (555) 987-6543",
+      "message": "Is the Cyberbeast eligible for the commercial clean vehicle tax credit, and can I configure it with the tactical grey interior accent package?",
+      "status": "contacted",
+      "createdAt": "2026-06-22T03:40:00.000Z"
+    }
+  ],
+  "settings": {
+    "title": "TESLA INVENTORY",
+    "logo": "TESLA",
+    "favicon": "T",
+    "contactEmail": "sales@tesla-inventory.com",
+    "contactPhone": "+1 (800) 555-0199",
+    "contactAddress": "3500 Deer Creek Road, Palo Alto, CA 94304",
+    "socialTwitter": "https://twitter.com/tesla",
+    "socialInstagram": "https://instagram.com/tesla",
+    "socialYoutube": "https://youtube.com/tesla",
+    "socialFacebook": "https://facebook.com/tesla",
+    "primaryColor": "#e82127"
+  }
+}
